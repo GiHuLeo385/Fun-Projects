@@ -3,6 +3,8 @@ import turtle
 
 print("This is a 2 variable linear regression analysis programme")
 No_of_sets = int(input("Number of variable-sets: "))
+
+"""This is use to resize the graph at the end, you have to tweak it a couple of times to get it right, the rule of thumb is if the data is around 100, then 1 is find"""
 margin = float(input("Please input ratio for the graph(> 1 is bigger, < 0 is smaller): "))
 
 x = []
