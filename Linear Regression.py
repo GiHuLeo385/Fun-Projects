@@ -35,7 +35,7 @@ intercept = (mean_y - slope * mean_x)
 """Draw the X-Y Axis"""
 
 turtle.penup()
-turtle.goto(-700, -300)
+turtle.goto(-700, -300)   """These are meant to displace where the turtle starts drawing"""
 turtle.pendown()
 turtle.forward(max(x) + 30)
 turtle.penup()
