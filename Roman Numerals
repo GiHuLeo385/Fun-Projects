@@ -1,0 +1,79 @@
+"""
+    This is a programme that translate normal numerals into Roman numerals.
+    The rules of Roman numerals are as follow: There are 7 symbols used in Roman Numerals:
+    I = 1; V = 5; X = 10; L = 50; C = 100; D = 500; M = 1000
+    The way Roman numeral works is to add number from left to right in descending order.
+    This means that the biggest numbers sit on the right and descend to the left.
+    Numbers that are smaller which stands before the bigger number is substracted from the larger one:
+        ie. IV = 5 - 1 = 4.
+    This, however, only applies to two of the closest numbers: IV and IX are correct but not IL
+        ie. XL and XC is correct; CD and CM is correct.
+    Thus, what this means is that the subtraction case only happens for 4, 9 and its 10x
+    The current programme only support numbers less than 2000
+"""
+import math
+
+
+def translator(number, base):
+    if base == 1000:
+        print("M", end="")
+
+    if base == 100:
+        if 1 <= number <= 3:
+            while number:
+                print("C", end="")
+                number -= 1
+        elif number == 4:
+            print("CD", end="")
+        elif 5 <= number <= 8:
+            print("D", end="")
+            while number > 5:
+                print("C", end="")
+                number -= 1
+        else:
+            print("CM", end="")
+
+    if base == 10:
+        if 1 <= number <= 3:
+            while number:
+                print("X", end="")
+                number -= 1
+        elif number == 4:
+            print("XL", end="")
+        elif 5 <= number <= 8:
+            print("L", end="")
+            while number > 5:
+                print("X", end="")
+                number -= 1
+        else:
+            print("XC", end="")
+
+    if base == 1:
+        if 1 <= number <= 3:
+            while number:
+                print("I", end="")
+                number -= 1
+        elif number == 4:
+            print("IV", end="")
+        elif 5 <= number <= 8:
+            print("V", end="")
+            while number > 5:
+                print("I", end="")
+                number -= 1
+        else:
+            print("IX", end="")
+
+
+def roman_numeral_translator(normal_number):
+    counter = 10 ** int(math.log10(normal_number))
+
+    while normal_number:
+        working_number = int(normal_number / counter)
+        translator(working_number, counter)
+        normal_number = normal_number - working_number * counter
+        counter = counter / 10
+
+
+normal_input = int(input("Input the number here: "))
+
+roman_numeral_translator(normal_input)
