@@ -18,50 +18,46 @@ def translator(number, base):
     if base == 1000:
         print("M", end="")
 
-    if base == 100:
+    else:
         if 1 <= number <= 3:
             while number:
-                print("C", end="")
+                if base == 100:
+                    print("C", end="")
+                elif base == 10:
+                    print("X", end="")
+                elif base == 1:
+                    print("I", end="")
                 number -= 1
         elif number == 4:
-            print("CD", end="")
+            if base == 100:
+                print("CD", end="")
+            elif base == 10:
+                print("XL", end="")
+            elif base == 1:
+                print("IV", end="")
         elif 5 <= number <= 8:
-            print("D", end="")
-            while number > 5:
-                print("C", end="")
-                number -= 1
+            if base == 100:
+                print("D", end="")
+                while number > 5:
+                    print("C", end="")
+                    number -= 1
+            elif base == 10:
+                print("L", end="")
+                while number > 5:
+                    print("X", end="")
+                    number -= 1
+            elif base == 1:
+                print("V", end="")
+                while number > 5:
+                    print("I", end="")
+                    number -= 1
         else:
-            print("CM", end="")
-
-    if base == 10:
-        if 1 <= number <= 3:
-            while number:
-                print("X", end="")
-                number -= 1
-        elif number == 4:
-            print("XL", end="")
-        elif 5 <= number <= 8:
-            print("L", end="")
-            while number > 5:
-                print("X", end="")
-                number -= 1
-        else:
-            print("XC", end="")
-
-    if base == 1:
-        if 1 <= number <= 3:
-            while number:
-                print("I", end="")
-                number -= 1
-        elif number == 4:
-            print("IV", end="")
-        elif 5 <= number <= 8:
-            print("V", end="")
-            while number > 5:
-                print("I", end="")
-                number -= 1
-        else:
-            print("IX", end="")
+            if base == 100:
+                print("CM", end="")
+            if base == 10:
+                print("XC", end="")
+            elif base == 1:
+                print("IX", end="")
 
 
 def roman_numeral_translator(normal_number):
