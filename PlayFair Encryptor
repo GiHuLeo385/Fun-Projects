@@ -1,0 +1,77 @@
+# This is the playfair cipher encryptor and decrypter
+
+import string
+
+
+def playfair_matrix(kw):
+    kw = kw.upper()
+    kw = kw.replace(" ", "")
+    kw = "".join(dict.fromkeys(kw + string.ascii_uppercase))
+    if kw.find('I') < kw.find('J'):
+        kw = kw.replace("J", "")
+    else:
+        kw = kw.replace("I", "")
+    matrix = [kw[i:i+5] for i in range(0, len(kw), 5)]
+    return matrix
+
+
+def playfair_msg(msg):
+    msg = msg.upper()
+    msg = msg.replace(" ", "")
+    if (len(msg) % 2) == 1:
+        msg = msg + "X"
+    raw_code = [msg[i:i+2] for i in range(0, len(msg), 2)]
+    return raw_code
+
+
+def return_index(my_list, char):
+    for sub_list in my_list:
+        if char in sub_list:
+            return my_list.index(sub_list), sub_list.index(char)
+
+
+def encryptor(mtx, code):
+    print(mtx, code)
+    for char in code:
+        if char[0] == char[1]:
+            char = char[:-1] + "X"
+        if sum(x.count("I") for x in mtx):
+            if char.count("J"):
+                char = char.replace("J", "I")
+        if sum(x.count("J") for x in mtx):
+            if char.count("I"):
+                char = char.replace("I", "J")
+        pos_char_1 = return_index(mtx, char[0])
+        pos_char_2 = return_index(mtx, char[1])
+        if (pos_char_1[0] != pos_char_2[0]) and (pos_char_1[1] != pos_char_2[1]):
+            print(mtx[pos_char_1[0]][pos_char_2[1]], mtx[pos_char_2[0]][pos_char_1[1]], sep="", end=" ")
+        elif pos_char_1[0] == pos_char_2[0]:
+            if pos_char_1[1] < pos_char_2[1]:
+                if pos_char_2[1] == 4:
+                    print(mtx[pos_char_1[0]][pos_char_1[1] + 1], mtx[pos_char_2[0]][0], sep="", end=" ")
+                else:
+                    print(mtx[pos_char_1[0]][pos_char_1[1] + 1], mtx[pos_char_2[0]][pos_char_2[1] + 1], sep="", end=" ")
+            else:
+                if pos_char_2[1] == 0:
+                    print(mtx[pos_char_1[0]][pos_char_1[1] - 1], mtx[pos_char_2[0]][4], sep="", end=" ")
+                else:
+                    print(mtx[pos_char_1[0]][pos_char_1[1] - 1], mtx[pos_char_2[0]][pos_char_2[1] - 1], sep="", end=" ")
+        elif pos_char_1[1] == pos_char_2[1]:
+            if pos_char_1[0] < pos_char_2[0]:
+                if pos_char_2[0] == 4:
+                    print(mtx[pos_char_1[0] + 1][pos_char_1[1]], mtx[0][pos_char_2[1]], sep="", end=" ")
+                else:
+                    print(mtx[pos_char_1[0] + 1][pos_char_1[1]], mtx[pos_char_2[0] + 1][pos_char_2[1]], sep="", end=" ")
+            else:
+                if pos_char_2[0] == 0:
+                    print(mtx[pos_char_1[0] - 1][pos_char_1[1]], mtx[4][pos_char_2[1]], sep="", end=" ")
+                else:
+                    print(mtx[pos_char_1[1] - 1][pos_char_1[1]], mtx[pos_char_2[0] - 1][pos_char_2[1]], sep="", end=" ")
+
+
+keyword = str(input("Enter the keyword: "))
+message = str(input("Enter the text: "))
+
+matrix_1 = playfair_matrix(keyword)
+raw_code_1 = playfair_msg(message)
+encryptor(matrix_1, raw_code_1)
